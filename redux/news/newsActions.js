@@ -15,11 +15,19 @@ const fetchSuccess = (news) => ({
   payload: { news },
 });
 
-export const fetchNews = () => async (dispatch) => {
+export const fetchNews = (options) => async (dispatch) => {
   dispatch(fetchRequest());
 
+  const query = options && options.query ? `&q=${options.query}` : "";
+
   const API_KEY = "e62c0fa66ae343ba948ccbb4b2dbc707";
-  const URL = `http://newsapi.org/v2/top-headlines?country=ng&apiKey=${API_KEY}`;
+  const URL =
+    "http://newsapi.org/v2/" +
+    "top-headlines?" +
+    "country=ng" +
+    "&apiKey=" +
+    API_KEY +
+    query;
 
   try {
     const { data } = await axios.get(URL);

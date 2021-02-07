@@ -24,5 +24,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingLeft: 10,
     marginBottom: 10,
+    color: "#46165a",
   },
 });

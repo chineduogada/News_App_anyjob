@@ -57,17 +57,26 @@ const News = () => {
     <Section heading="news">
       <View>
         {error ? (
-          <Text>{error}</Text>
+          <View style={styles.error}>
+            <MaterialIcons name="error" size={24} color="red" />
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
         ) : (
-          <FlatList
-            style={styles.newList}
-            data={news}
-            renderItem={({ item }) => <Item data={item} />}
-            keyExtractor={(item) => `${item.title}`}
-            refreshControl={
-              <RefreshControl refreshing={loading} onRefresh={getNews} />
-            }
-          />
+          <>
+            <FlatList
+              style={styles.newList}
+              data={news}
+              renderItem={({ item }) => <Item data={item} />}
+              keyExtractor={(item) => `${item.title}`}
+              refreshControl={
+                <RefreshControl
+                  colors={["#9032b7"]}
+                  refreshing={loading}
+                  onRefresh={getNews}
+                />
+              }
+            />
+          </>
         )}
       </View>
     </Section>
@@ -112,6 +121,17 @@ const stylesItem = StyleSheet.create({
   },
 });
 const styles = StyleSheet.create({
+  error: {
+    height: Dimensions.get("window").height - 200,
+    backgroundColor: "#ffe1e1",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errorText: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "red",
+  },
   newList: {
     height: Dimensions.get("window").height - 200,
   },
