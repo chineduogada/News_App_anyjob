@@ -8,34 +8,40 @@ import {
   Text,
   View,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
 import DateTimeFormat from "format-date-time";
 import Section from "../Section";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchNews } from "../../redux";
 
 const Item = ({ data }) => {
   const defaultFormatter = new DateTimeFormat();
-
   const date = defaultFormatter.parse(data.date, "HH:mm:ss");
 
   return (
-    <View style={stylesItem.container}>
-      <Image source={{ uri: data.urlToImage }} style={stylesItem.image} />
-      <View>
-        <View style={stylesItem.textHeader}>
-          <Text numberOfLines={1} style={stylesItem.title}>
-            {data.title}
-          </Text>
+    data.content && (
+      <View style={stylesItem.container}>
+        {data.urlToImage ? (
+          <Image source={{ uri: data.urlToImage }} style={stylesItem.image} />
+        ) : (
+          <MaterialIcons name="broken-image" size={60} color="black" />
+        )}
+        <View>
+          <View style={stylesItem.textHeader}>
+            <Text numberOfLines={1} style={stylesItem.title}>
+              {data.title}
+            </Text>
 
-          <Text numberOfLines={1} style={stylesItem.date}>
-            {date}
+            <Text numberOfLines={1} style={stylesItem.date}>
+              {date}
+            </Text>
+          </View>
+          <Text numberOfLines={3} style={stylesItem.description}>
+            {data.description || data.content}
           </Text>
         </View>
-        <Text numberOfLines={3} style={stylesItem.description}>
-          {data.description}
-        </Text>
       </View>
-    </View>
+    )
   );
 };
 
@@ -112,47 +118,3 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height - 200,
   },
 });
-
-// import React from "react";
-// import {
-//   RefreshControl,
-//   View,
-//   // ScrollView as View,
-//   StyleSheet,
-//   Text,
-// } from "react-native";
-
-// const wait = (timeout) => {
-//   return new Promise((resolve) => setTimeout(resolve, timeout));
-// };
-
-// const News = () => {
-//   const [refreshing, setRefreshing] = React.useState(false);
-
-//   const onRefresh = React.useCallback(() => {
-//     setRefreshing(true);
-//     wait(2000).then(() => setRefreshing(false));
-//   }, []);
-
-//   return (
-//     <View
-//       style={styles.scrollView}
-//       refreshControl={
-//         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-//       }
-//     >
-//       <Text>Pull down to see RefreshControl indicator</Text>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   scrollView: {
-//     flex: 1,
-//     backgroundColor: "pink",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
-
-// export default News;
