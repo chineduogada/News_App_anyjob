@@ -19,29 +19,27 @@ const Item = ({ data }) => {
   const date = defaultFormatter.parse(data.date, "HH:mm:ss");
 
   return (
-    data.content && (
-      <View style={stylesItem.container}>
-        {data.urlToImage ? (
-          <Image source={{ uri: data.urlToImage }} style={stylesItem.image} />
-        ) : (
-          <MaterialIcons name="broken-image" size={60} color="black" />
-        )}
-        <View>
-          <View style={stylesItem.textHeader}>
-            <Text numberOfLines={1} style={stylesItem.title}>
-              {data.title}
-            </Text>
+    <View style={stylesItem.container}>
+      {data.urlToImage ? (
+        <Image source={{ uri: data.urlToImage }} style={stylesItem.image} />
+      ) : (
+        <MaterialIcons name="broken-image" size={60} color="black" />
+      )}
+      <View>
+        <View style={stylesItem.textHeader}>
+          <Text numberOfLines={1} style={stylesItem.title}>
+            {data.title}
+          </Text>
 
-            <Text numberOfLines={1} style={stylesItem.date}>
-              {date}
-            </Text>
-          </View>
-          <Text numberOfLines={3} style={stylesItem.description}>
-            {data.description || data.content}
+          <Text numberOfLines={1} style={stylesItem.date}>
+            {date}
           </Text>
         </View>
+        <Text numberOfLines={3} style={stylesItem.description}>
+          {data.description || data.content}
+        </Text>
       </View>
-    )
+    </View>
   );
 };
 

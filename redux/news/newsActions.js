@@ -23,7 +23,18 @@ export const fetchNews = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(URL);
-    dispatch(fetchSuccess(data.articles));
+
+    const news = data.articles
+      .filter((article) => article.content)
+      .map((article) => ({
+        date: article.date,
+        urlToImage: article.urlToImage,
+        title: article.title,
+        description: article.description,
+        content: article.content,
+      }));
+
+    dispatch(fetchSuccess(news));
   } catch (error) {
     dispatch(fetchFailure(error.message));
   }
