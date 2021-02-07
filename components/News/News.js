@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions,
   FlatList,
@@ -9,169 +9,8 @@ import {
 } from "react-native";
 import DateTimeFormat from "format-date-time";
 import Section from "../Section";
-
-const newsList = [
-  {
-    source: {
-      id: 1,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 2,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 3,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 4,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 5,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 6,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 7,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 8,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 9,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-  {
-    source: {
-      id: 10,
-      name: "VentureBeat",
-    },
-    author: "Kyle Wiggers",
-    title:
-      "Pony.ai raises $100 million more to advance its autonomous vehicle tech",
-    description:
-      "Autonomous vehicle startup Pony.ai has raised $100 million more, bringing its total raised to over $1 billion at a $5.3 billion valuation.",
-    url:
-      "https://venturebeat.com/2021/02/07/pony-ai-raises-100-million-more-to-advance-its-autonomous-vehicle-tech/",
-    urlToImage:
-      "https://venturebeat.com/wp-content/uploads/2019/08/ad1de834-abf3-471e-b4cc-3408c731b4f4-e1566788588385.png?w=1200&strip=all",
-    publishedAt: "2021-02-07T14:00:51Z",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNews } from "../../redux";
 
 const Item = ({ data }) => {
   const defaultFormatter = new DateTimeFormat();
@@ -200,17 +39,28 @@ const Item = ({ data }) => {
 };
 
 const News = () => {
-  const [value, onChangeText] = useState("");
+  const dispatch = useDispatch();
+  const { loading, error, news } = useSelector(({ news }) => news);
+
+  useEffect(() => {
+    dispatch(fetchNews());
+  }, []);
 
   return (
     <Section heading="news">
       <View>
-        <FlatList
-          style={styles.newList}
-          data={newsList}
-          renderItem={({ item }) => <Item data={item} />}
-          keyExtractor={(item) => `${item.source.id}`}
-        />
+        {loading && <Text>Loading...</Text>}
+
+        {error ? (
+          <Text>{error}</Text>
+        ) : (
+          <FlatList
+            style={styles.newList}
+            data={news}
+            renderItem={({ item }) => <Item data={item} />}
+            keyExtractor={(item) => `${item.title}`}
+          />
+        )}
       </View>
     </Section>
   );
