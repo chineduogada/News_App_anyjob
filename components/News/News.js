@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Dimensions,
   FlatList,
   Image,
+  RefreshControl,
   StyleSheet,
   Text,
   View,
@@ -42,15 +43,15 @@ const News = () => {
   const dispatch = useDispatch();
   const { loading, error, news } = useSelector(({ news }) => news);
 
+  const getNews = useCallback(() => dispatch(fetchNews()), [fetchNews]);
+
   useEffect(() => {
-    dispatch(fetchNews());
-  }, []);
+    getNews();
+  }, [getNews]);
 
   return (
     <Section heading="news">
       <View>
-        {loading && <Text>Loading...</Text>}
-
         {error ? (
           <Text>{error}</Text>
         ) : (
@@ -59,6 +60,9 @@ const News = () => {
             data={news}
             renderItem={({ item }) => <Item data={item} />}
             keyExtractor={(item) => `${item.title}`}
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={getNews} />
+            }
           />
         )}
       </View>
@@ -108,3 +112,47 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height - 200,
   },
 });
+
+// import React from "react";
+// import {
+//   RefreshControl,
+//   View,
+//   // ScrollView as View,
+//   StyleSheet,
+//   Text,
+// } from "react-native";
+
+// const wait = (timeout) => {
+//   return new Promise((resolve) => setTimeout(resolve, timeout));
+// };
+
+// const News = () => {
+//   const [refreshing, setRefreshing] = React.useState(false);
+
+//   const onRefresh = React.useCallback(() => {
+//     setRefreshing(true);
+//     wait(2000).then(() => setRefreshing(false));
+//   }, []);
+
+//   return (
+//     <View
+//       style={styles.scrollView}
+//       refreshControl={
+//         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+//       }
+//     >
+//       <Text>Pull down to see RefreshControl indicator</Text>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   scrollView: {
+//     flex: 1,
+//     backgroundColor: "pink",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
+
+// export default News;
