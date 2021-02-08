@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   Dimensions,
   FlatList,
@@ -11,8 +11,8 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import DateTimeFormat from "format-date-time";
-import Section from "../Section";
 import { fetchNews } from "../../redux";
+import Section from "../Section";
 
 const Item = ({ data }) => {
   const defaultFormatter = new DateTimeFormat();
@@ -122,7 +122,7 @@ const stylesItem = StyleSheet.create({
 });
 const styles = StyleSheet.create({
   error: {
-    height: Dimensions.get("window").height - 200,
+    height: Dimensions.get("window").height - 250,
     backgroundColor: "#ffe1e1",
     alignItems: "center",
     justifyContent: "center",
@@ -133,6 +133,6 @@ const styles = StyleSheet.create({
     color: "red",
   },
   newList: {
-    height: Dimensions.get("window").height - 200,
+    height: Dimensions.get("window").height - 250,
   },
 });
