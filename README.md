@@ -1,4 +1,4 @@
-# Sanity + React Native app example
+# AnyJob + React Native app (assessment)
 
 ## Setup
 
